@@ -1,0 +1,12 @@
+{application, data_anonymization,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { data_anonymization_app, []}},
+  {env, []}
+ ]}.

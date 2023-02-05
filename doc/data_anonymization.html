@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module data_anonymization</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module data_anonymization</h1>
+<ul class="index"><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#aggregate-1">aggregate/1</a></td><td>Aggregates user price tuples and returns triples with occurrence count.</td></tr>
+<tr><td valign="top"><a href="#anonymize-1">anonymize/1</a></td><td>Anonymizes user price triples based on Count &gt; 5 constraint.</td></tr>
+<tr><td valign="top"><a href="#avg-1">avg/1</a></td><td>Computes average ticket purchase price.</td></tr>
+<tr><td valign="top"><a href="#compute_stats-3">compute_stats/3</a></td><td>Parses JSON dataset, extracts airline ticket prices, generates tuples, aggregates them,
+  anonymizes and then computes stats: AVG, MED, MIN, MAX.</td></tr>
+<tr><td valign="top"><a href="#data_to_file-2">data_to_file/2</a></td><td>Utility function that writes any <code>Data</code> to a file under given <code>Path</code>.</td></tr>
+<tr><td valign="top"><a href="#get_user_tuples-3">get_user_tuples/3</a></td><td>Wrapper function that combines several preprocessing steps such as dataset deserialization
+  up to generation of user price tuples.</td></tr>
+<tr><td valign="top"><a href="#groups_stats-2">groups_stats/2</a></td><td>Utility function that computes useful data given a list of group sizes.</td></tr>
+<tr><td valign="top"><a href="#max-1">max/1</a></td><td>Computes maximum ticket purchase price.</td></tr>
+<tr><td valign="top"><a href="#med-1">med/1</a></td><td>Computes median ticket purchase price.</td></tr>
+<tr><td valign="top"><a href="#min-1">min/1</a></td><td>Computes minimum ticket purchase price.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="aggregate-1">aggregate/1</a></h3>
+<div class="spec">
+<p><tt>aggregate(User_tuples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Aggregates user price tuples and returns triples with occurrence count.</p>
+
+<h3 class="function"><a name="anonymize-1">anonymize/1</a></h3>
+<div class="spec">
+<p><tt>anonymize(Aggregated_user_triples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Anonymizes user price triples based on Count &gt; 5 constraint.</p>
+
+<h3 class="function"><a name="avg-1">avg/1</a></h3>
+<div class="spec">
+<p><tt>avg(Aggregated_user_triples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Computes average ticket purchase price.</p>
+
+<h3 class="function"><a name="compute_stats-3">compute_stats/3</a></h3>
+<div class="spec">
+<p><tt>compute_stats(Directory, Include_duplicates, Group_size) -&gt; list()</tt>
+<ul class="definitions"><li><tt>Directory = string()</tt></li><li><tt>Include_duplicates = yes | no</tt></li><li><tt>Group_size = number()</tt></li></ul></p>
+<p> </p>
+</div><p>Parses JSON dataset, extracts airline ticket prices, generates tuples, aggregates them,
+  anonymizes and then computes stats: AVG, MED, MIN, MAX. Reads the dataset from
+  <code>Directory</code> path string, <code>Include_duplicates</code> specifies whether to
+  return duplicate tuples (yes) per user or remove them (no). <code>Group_size</code> specifies
+  size of histogram buckets.</p>
+
+<h3 class="function"><a name="data_to_file-2">data_to_file/2</a></h3>
+<div class="spec">
+<p><tt>data_to_file(Path, Data) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Utility function that writes any <code>Data</code> to a file under given <code>Path</code>.</p>
+
+<h3 class="function"><a name="get_user_tuples-3">get_user_tuples/3</a></h3>
+<div class="spec">
+<p><tt>get_user_tuples(Directory, Include_duplicates, Group_size) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Wrapper function that combines several preprocessing steps such as dataset deserialization
+  up to generation of user price tuples.</p>
+
+<h3 class="function"><a name="groups_stats-2">groups_stats/2</a></h3>
+<div class="spec">
+<p><tt>groups_stats(Directory, Groups) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Utility function that computes useful data given a list of group sizes.</p>
+
+<h3 class="function"><a name="max-1">max/1</a></h3>
+<div class="spec">
+<p><tt>max(Aggregated_user_triples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Computes maximum ticket purchase price.</p>
+
+<h3 class="function"><a name="med-1">med/1</a></h3>
+<div class="spec">
+<p><tt>med(Aggregated_user_triples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Computes median ticket purchase price.</p>
+
+<h3 class="function"><a name="min-1">min/1</a></h3>
+<div class="spec">
+<p><tt>min(Aggregated_user_triples) -&gt; any()</tt></p>
+<p> </p>
+</div><p>Computes minimum ticket purchase price.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

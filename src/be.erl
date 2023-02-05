@@ -36,7 +36,7 @@ extract_user_prices(Json_data) ->
   %Get inner purchases proplist
   Purchases = proplists:get_value(<<"purchases">>, Json_data),
   %Get inner tuple lists
-  A = proplists:get_all_values(struct, Purchases),
+  A = lists:map(fun(L) -> element(1, L) end, Purchases),
   %Filter out tuple lists that are not of type "airline"
   Airlines = lists:filter(fun(L) -> proplists:get_value(<<"type">>, L) == <<"airline">> end, A),
   lists:map(fun(X) ->
@@ -159,13 +159,11 @@ groups_stats(Directory, Groups) ->
 %% @doc Reads a file to binary and splits it on new line character.
 file_to_binary(File) ->
   {ok, Data} = file:read_file(File),
-  %split the lines, the JSON might not be in a single line
-  binary:split(Data, [<<"\n">>], [global]).
+  Data.
 
 %% @doc Decodes binary JSON data and returns proplist of the serialized values.
 decode_json(Binary_data) ->
-  {struct, Json_data} = mochijson2:decode(Binary_data),
-  Json_data.
+  element(1, jiffy:decode(Binary_data)).
 
 %% @doc Returns a list of JSON file paths in a given directory.
 user_files(Dir) ->

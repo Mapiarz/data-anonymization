@@ -1,5 +1,5 @@
 -module(data_anonymization).
--export([get_user_tuples/3, data_to_file/2, aggregate/1, anonimize/1,
+-export([get_user_tuples/3, data_to_file/2, aggregate/1, anonymize/1,
   avg/1, min/1, max/1, med/1, compute_stats/3, groups_stats/2]).
 
 -spec compute_stats(Directory, Include_duplicates, Group_size) -> list() when
@@ -7,18 +7,18 @@
   Include_duplicates::yes | no,
   Group_size ::number().
 %% @doc Parses JSON dataset, extracts airline ticket prices, generates tuples, aggregates them,
-%% anonimizes and then computes stats: AVG, MED, MIN, MAX. Reads the dataset from
+%% anonymizes and then computes stats: AVG, MED, MIN, MAX. Reads the dataset from
 %% <code>Directory</code> path string, <code>Include_duplicates</code> specifies whether to
 %% return duplicate tuples (yes) per user or remove them (no). <code>Group_size</code> specifies
 %% size of histogram buckets.
 compute_stats(Directory, Include_duplicates, Group_size) ->
   User_tuples = get_user_tuples(Directory, Include_duplicates, Group_size),
   Aggregated = aggregate(User_tuples),
-  Anonimized = anonimize(Aggregated),
-  [ {avg, avg(Anonimized)},
-    {med, med(Anonimized)},
-    {min, min(Anonimized)},
-    {max, max(Anonimized)} ].
+  Anonymized = anonymize(Aggregated),
+  [ {avg, avg(Anonymized)},
+    {med, med(Anonymized)},
+    {min, min(Anonymized)},
+    {max, max(Anonymized)} ].
 
 %% @doc Wrapper function that combines several preprocessing steps such as dataset deserialization
 %% up to generation of user price tuples.
@@ -71,8 +71,8 @@ aggregate(User_tuples) ->
     {A, B} = X,
     {A, B, length([ok || I <- Flat_list, I == X])} end, Uniq_list).
 
-%% @doc Anonimizes user price triples based on Count > 5 constraint.
-anonimize(Aggregated_user_triples) ->
+%% @doc Anonymizes user price triples based on Count > 5 constraint.
+anonymize(Aggregated_user_triples) ->
   lists:filter(fun(X) ->
     {_, _, Count} = X,
     Count > 5 end, Aggregated_user_triples).
@@ -148,11 +148,11 @@ groups_stats(Directory, Groups) ->
   lists:map(fun(X) ->
     User_tuples = get_user_tuples(Directory, no, X),
     Aggregated = aggregate(User_tuples),
-    Anonimized = anonimize(Aggregated),
+    Anonymized = anonymize(Aggregated),
     Len = lists:foldl(fun(Y, Sum) ->
       {_, _, Count} = Y,
-      Sum + Count end, 0, Anonimized),
-    {X, Len, avg(Anonimized), med(Anonimized), min(Anonimized), max(Anonimized)} end, Groups).
+      Sum + Count end, 0, Anonymized),
+    {X, Len, avg(Anonymized), med(Anonymized), min(Anonymized), max(Anonymized)} end, Groups).
 
 % ---- File utility functions ----
 

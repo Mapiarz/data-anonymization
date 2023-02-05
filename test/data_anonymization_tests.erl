@@ -15,34 +15,34 @@ raw_data_test_() ->
     ?_assert(data_anonymization:max(Aggregated) =:= 100000)
   ].
 
-%% @doc Tests whether AVG, MED, MIN and MAX of the data (anonimized, no duplicates per user allowed)
+%% @doc Tests whether AVG, MED, MIN and MAX of the data (anonymized, no duplicates per user allowed)
 %% is the same as the reference values calculated manually in Excel. Additionally tests whether a
 %% correct number of tuples and triples is extracted from the dataset.
 processed_data_test_() ->
   Data = data_anonymization:get_user_tuples("data//", no, 9),
   Aggregated = data_anonymization:aggregate(Data),
-  Anonimized = data_anonymization:anonimize(Aggregated),
+  Anonymized = data_anonymization:anonymize(Aggregated),
   [ ?_assert(length(lists:flatten(Data)) =:= 11056),
     ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Aggregated) =:= 11056),
-    ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Anonimized) =:= 11053),
-    ?_assert(data_anonymization:avg(Anonimized) =:= 2503.4917217045145),
-    ?_assert(data_anonymization:med(Anonimized) =:= 2520),
-    ?_assert(data_anonymization:min(Anonimized) =:= 9),
-    ?_assert(data_anonymization:max(Anonimized) =:= 4995)
+    ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Anonymized) =:= 11053),
+    ?_assert(data_anonymization:avg(Anonymized) =:= 2503.4917217045145),
+    ?_assert(data_anonymization:med(Anonymized) =:= 2520),
+    ?_assert(data_anonymization:min(Anonymized) =:= 9),
+    ?_assert(data_anonymization:max(Anonymized) =:= 4995)
   ].
 
-%% @doc Tests whether AVG, MED, MIN and MAX of the data (anonimized, no duplicates per user allowed)
+%% @doc Tests whether AVG, MED, MIN and MAX of the data (anonymized, no duplicates per user allowed)
 %% is the same as the reference values calculated manually in Excel. Additionally tests whether a
 %% correct number of tuples and triples is extracted from the dataset.
 initial_data_test_() ->
   Data = data_anonymization:get_user_tuples("data//", no, 1),
   Aggregated = data_anonymization:aggregate(Data),
-  Anonimized = data_anonymization:anonimize(Aggregated),
+  Anonymized = data_anonymization:anonymize(Aggregated),
   [ ?_assert(length(lists:flatten(Data)) =:= 11061),
     ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Aggregated) =:= 11061),
-    ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Anonimized) =:= 813),
-    ?_assert(data_anonymization:avg(Anonimized) =:= 2468.093480934809),
-    ?_assert(data_anonymization:med(Anonimized) =:= 2549),
-    ?_assert(data_anonymization:min(Anonimized) =:= 56),
-    ?_assert(data_anonymization:max(Anonimized) =:= 4995)
+    ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Anonymized) =:= 813),
+    ?_assert(data_anonymization:avg(Anonymized) =:= 2468.093480934809),
+    ?_assert(data_anonymization:med(Anonymized) =:= 2549),
+    ?_assert(data_anonymization:min(Anonymized) =:= 56),
+    ?_assert(data_anonymization:max(Anonymized) =:= 4995)
   ].

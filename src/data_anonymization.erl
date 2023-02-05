@@ -1,4 +1,4 @@
--module(be).
+-module(data_anonymization).
 -export([get_user_tuples/3, data_to_file/2, aggregate/1, anonimize/1,
   avg/1, min/1, max/1, med/1, compute_stats/3, groups_stats/2]).
 

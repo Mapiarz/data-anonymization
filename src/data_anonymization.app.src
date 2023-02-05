@@ -2,7 +2,7 @@
  [
   {description, "Data anonymization app"},
   {vsn, "1"},
-  {modules, [be]},
+  {modules, [data_anonymization]},
   {registered, []},
   {applications, [kernel, stdlib, jiffy]},
   {env, []}

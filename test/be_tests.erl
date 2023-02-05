@@ -4,8 +4,8 @@
 %% @doc Tests whether AVG, MED, MIN and MAX of raw data (no anonimization, duplicates allowed)
 %% is the same as the reference values. Additionally tests whether a correct number of tuples
 %% and triples is extracted from the dataset.
-raw_data_test_()->
-  Data = be:get_user_tuples("..//data//", yes, 1),
+raw_data_test_() ->
+  Data = be:get_user_tuples("data//", yes, 1),
   Aggregated = be:aggregate(Data),
   [ ?_assert(length(lists:flatten(Data)) =:= 11063),
     ?_assert(lists:foldl(fun(X, Sum) -> {_, _, Count} = X, Sum + Count end, 0, Aggregated) =:= 11063),
@@ -19,7 +19,7 @@ raw_data_test_()->
 %% is the same as the reference values calculated manually in Excel. Additionally tests whether a
 %% correct number of tuples and triples is extracted from the dataset.
 processed_data_test_() ->
-  Data = be:get_user_tuples("..//data//", no, 9),
+  Data = be:get_user_tuples("data//", no, 9),
   Aggregated = be:aggregate(Data),
   Anonimized = be:anonimize(Aggregated),
   [ ?_assert(length(lists:flatten(Data)) =:= 11056),
@@ -35,7 +35,7 @@ processed_data_test_() ->
 %% is the same as the reference values calculated manually in Excel. Additionally tests whether a
 %% correct number of tuples and triples is extracted from the dataset.
 initial_data_test_() ->
-  Data = be:get_user_tuples("..//data//", no, 1),
+  Data = be:get_user_tuples("data//", no, 1),
   Aggregated = be:aggregate(Data),
   Anonimized = be:anonimize(Aggregated),
   [ ?_assert(length(lists:flatten(Data)) =:= 11061),
